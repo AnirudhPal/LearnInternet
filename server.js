@@ -1,8 +1,11 @@
-// Import a Standard Library Reference
-var http = require('http');
+//importing libraries
+const express = require('express')
+const app = express()
+const port = 3000
+const path = require('path')
 
-// Create a Server
-http.createServer(function (req, res) {
-	res.write('Hello World!'); //write a response to the client
-	res.end(); //end the response
-}).listen(8080); // Host on 8080 Port
+//sending index.html
+app.get('/', (req, res) => res.sendFile(path.join (__dirname, 'index.html')))
+
+//starting server
+app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
