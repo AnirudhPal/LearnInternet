@@ -1,0 +1,23 @@
+{
+  "name": "newfileshare",
+  "version": "1.0.0",
+  "description": "Bechtel Center File Server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnirudhPal/LearnInternet.git"
+  },
+  "author": "Morgan Burgett",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnirudhPal/LearnInternet/issues"
+  },
+  "homepage": "https://github.com/AnirudhPal/LearnInternet#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "formidable": "^1.2.2"
+  }
+}
