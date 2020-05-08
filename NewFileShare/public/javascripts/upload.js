@@ -59,6 +59,22 @@ $('#upload-input').on('change', function () {
     //Only proceed if there is more than one file selected
     if (files.length > 0) {
 
+        //Filter file types to accept only .nc, .dxf, .ord
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+
+
+            //Extract File Type
+            var fileExtension = file.name.split('.').pop();
+
+            //Limit file types to .nc, .dxf, . ord for upload
+            if (fileExtension != 'nc' && fileExtension != 'dxf' && fileExtension != 'ord') {
+
+                //Exit function
+                return;
+            }
+        }
+
         // create a FormData object which will be sent as the data payload in the AJAX request
         var formData = new FormData();
 
