@@ -1,79 +1,75 @@
-//Variable to track device
-var device = '';
+/* Global Var */
+var device = '';  //Variable to track device
 
-//Function for Mill Upload
+// Function for Mill Upload
 function millUpload() {
-    //Set device
+    // Set device
     device = '/mill';
 
-    //Clear and Run
+    // Clear and Run
     clearRun();
 }
 
-//Function for Lathe Upload
+// Function for Lathe Upload
 function latheUpload() {
-    //Set device
+    // Set device
     device = '/lathe';
 
-    //Clear and Run
+    // Clear and Run
     clearRun();
 }
 
-//Function for Gantry Upload
+// Function for Gantry Upload
 function gantryUpload() {
-    //Set device
+    // Set device
     device = '/gantry';
 
-    //Clear and Run
+    // Clear and Run
     clearRun();
 }
 
-//Function for Waterjet Upload
+// Function for Waterjet Upload
 function waterjetUpload() {
-    //Set device
+    // Set device
     device = '/waterjet';
 
-    //Clear and Run
+    // Clear and Run
     clearRun();
 }
 
-//Function for Clearing Progress Bar
+// Function for Clearing Progress Bar
 function clearRun() {
-    //Trigger input
+    // Trigger input
     $('#upload-input').click();
 
-    //Clear Progress Bar
+    // Clear Progress Bar
     $('.progress-bar').text('0%');
     $('.progress-bar').width('0%');
 
-    //Print statement
-    console.log('Sending File to ' + device + '\n');
+    // Print statement
+    console.log('Sending File to ' + device);
 }
 
-//Allows user to send data to server
+// Allows user to send data to server
 $('#upload-input').on('change', function () {
-
-    //Get files that are associated with the input
+    // Get files that are associated with the input
     var files = $(this).get(0).files;
 
-    //Only proceed if there is more than one file selected
+    // Only proceed if there is more than one file selected
     if (files.length > 0) {
-
-        //Filter file types to accept only .nc, .dxf, .ord
+        // Filter file types to accept only .nc, .dxf, .ord
         for (var i = 0; i < files.length; i++) {
+            // Get individual file
             var file = files[i];
 
-
-            //Extract File Type
+            // Extract File Type
             var fileExtension = file.name.split('.').pop();
 
-            //Limit file types to .nc, .dxf, . ord for upload
-            if (fileExtension != 'nc' && fileExtension != 'dxf' && fileExtension != 'ord') {
-
-                //Exit function
+            // Limit file types to .nc, .dxf, .ord, .mp4 for upload
+            if (fileExtension != 'nc' && fileExtension != 'dxf' && fileExtension != 'ord' && fileExtension != 'mp4') {
+                // Exit function
                 return;
             }
-
         }
 
         // create a FormData object which will be sent as the data payload in the AJAX request
@@ -81,26 +77,27 @@ $('#upload-input').on('change', function () {
 
         // loop through all the selected files and add them to the formData object
         for (var i = 0; i < files.length; i++) {
+            // Get file type
             var file = files[i];
 
-            //Extract File Type
+            // Extract File Type
             var fileExtension = file.name.split('.').pop();
 
+            // Handle NC for NGC FNC run
             if (fileExtension == 'nc') {
+                // Print
                 console.log('Adding o to nc file');
 
                 // add the nc files to formData object for the data payload
                 formData.append('uploads[]', file, 'o' + file.name);
             }
-
             else {
                 // add the files to formData object for the data payload
                 formData.append('uploads[]', file, file.name);
             }
-
         }
 
-        //Creating an AJAX object
+        // Creating an AJAX object
         $.ajax({
             url: device,
             type: 'POST',
@@ -116,6 +113,7 @@ $('#upload-input').on('change', function () {
 
                 // listen to the 'progress' event
                 xhr.upload.addEventListener('progress', function (evt) {
+                    // If it can have numeric length
                     if (evt.lengthComputable) {
                         // calculate the percentage of upload completed
                         var percentComplete = evt.loaded / evt.total;
