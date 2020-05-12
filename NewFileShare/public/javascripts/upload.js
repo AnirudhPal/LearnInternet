@@ -73,6 +73,7 @@ $('#upload-input').on('change', function () {
                 //Exit function
                 return;
             }
+
         }
 
         // create a FormData object which will be sent as the data payload in the AJAX request
@@ -81,8 +82,22 @@ $('#upload-input').on('change', function () {
         // loop through all the selected files and add them to the formData object
         for (var i = 0; i < files.length; i++) {
             var file = files[i];
-            // add the files to formData object for the data payload
-            formData.append('uploads[]', file, file.name);
+
+            //Extract File Type
+            var fileExtension = file.name.split('.').pop();
+
+            if (fileExtension == 'nc') {
+                console.log('Adding o to nc file');
+
+                // add the nc files to formData object for the data payload
+                formData.append('uploads[]', file, 'o' + file.name);
+            }
+
+            else {
+                // add the files to formData object for the data payload
+                formData.append('uploads[]', file, file.name);
+            }
+
         }
 
         //Creating an AJAX object
